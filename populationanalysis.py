@@ -1,14 +1,12 @@
-
 import csv
-import os
+import matplotlib.pyplot as plt
+
+species_names = []
+average_populations = []
 
 print("Species Population Analysis\n")
 
-# Get the absolute path to the CSV file relative to this script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "species_data.csv")
-
-with open(csv_path, "r", newline="") as file:
+with open("species_data.csv", "r") as file:
     reader = csv.DictReader(file)
 
     for row in reader:
@@ -20,19 +18,24 @@ with open(csv_path, "r", newline="") as file:
         total = site1 + site2 + site3
         average = round(total / 3, 2)
 
+        species_names.append(species)
+        average_populations.append(average)
+
         if average < 50:
             status = "Endangered"
-            trend= "Declining"
         elif average < 200:
             status = "Vulnerable"
-            trend= "Stable"
         else:
             status = "Least Concern"
-            trend= "Least Concerning"
 
         print(f"Species: {species}")
-        print(f"  Total Population: {total}")
         print(f"  Average Population: {average}")
-        print(f"  Conservation Status: {status}")
-        print(f"  Population Trend: {trend}\n")
-        
+        print(f"  Conservation Status: {status}\n")
+
+# ---- GRAPH SECTION ----
+plt.figure()
+plt.bar(species_names, average_populations)
+plt.xlabel("Species")
+plt.ylabel("Average Population")
+plt.title("Average Population of Species Across Sites")
+plt.show()
