@@ -1,8 +1,4 @@
 import csv
-import matplotlib.pyplot as plt
-
-species_names = []
-average_populations = []
 
 print("Species Population Analysis\n")
 
@@ -18,9 +14,6 @@ with open("species_data.csv", "r") as file:
         total = site1 + site2 + site3
         average = round(total / 3, 2)
 
-        species_names.append(species)
-        average_populations.append(average)
-
         if average < 50:
             status = "Endangered"
         elif average < 200:
@@ -29,13 +22,6 @@ with open("species_data.csv", "r") as file:
             status = "Least Concern"
 
         print(f"Species: {species}")
+        print(f"  Total Population: {total}")
         print(f"  Average Population: {average}")
         print(f"  Conservation Status: {status}\n")
-
-# ---- GRAPH SECTION ----
-plt.figure()
-plt.bar(species_names, average_populations)
-plt.xlabel("Species")
-plt.ylabel("Average Population")
-plt.title("Average Population of Species Across Sites")
-plt.show()
